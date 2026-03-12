@@ -18,13 +18,13 @@ export function ChatContainer() {
     listRef.current?.scrollTo(0, listRef.current.scrollHeight);
   }, [messages]);
 
-  function handleSubmit(value: number, raw: string) {
+  function handleSubmit(raw: string) {
     const userMessage: ChatMessage = {
       id: generateId(),
       role: "user",
       text: raw,
     };
-    const { color } = getGrayscaleForNumber(value);
+    const { color } = getGrayscaleForNumber(raw);
     const botMessage: ChatMessage = {
       id: generateId(),
       role: "bot",

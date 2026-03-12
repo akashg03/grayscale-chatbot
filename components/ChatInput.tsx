@@ -3,7 +3,7 @@
 import { useState } from "react";
 
 interface ChatInputProps {
-  readonly onSubmit: (value: number, raw: string) => void;
+  readonly onSubmit: (raw: string) => void;
 }
 
 export function ChatInput({ onSubmit }: ChatInputProps) {
@@ -19,12 +19,12 @@ export function ChatInput({ onSubmit }: ChatInputProps) {
       setError("Please enter a number.");
       return;
     }
-    const num = Number(raw);
-    if (Number.isNaN(num) || !Number.isFinite(num)) {
+    const isIntegerString = /^[-+]?\d+$/.test(raw);
+    if (!isIntegerString) {
       setError("Please enter a valid number.");
       return;
     }
-    onSubmit(num, raw);
+    onSubmit(raw);
     setValue("");
   }
 

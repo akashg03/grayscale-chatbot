@@ -2,12 +2,27 @@
 
 ## Last-two-digit extraction
 
-We use the remainder when dividing by 100:
+To handle arbitrarily large integers safely, we operate primarily on the **string**
+the user typed instead of relying on JavaScript's `Number`, which loses precision
+for values beyond \(2^{53} - 1\).
 
-- `value = number % 100`
-- Implemented as `getLastTwoDigits(number)`, returning a non-negative value in `[0, 99]` (e.g. negative inputs are normalized with `mod + 100`).
+- `getLastTwoDigits(input)` accepts either a `number` or a **numeric string**.
+- For strings, it:
+  - trims whitespace,
+  - validates with `/^[-+]?\\d+$/`,
+  - strips the sign,
+  - takes the last two digits,
+  - returns them as a non-negative integer in `[0, 99]`.
+- For numbers, it preserves the original behavior: `value = number % 100`
+  (with a small fix to keep the result non-negative).
 
-Examples: `1023 → 23`, `1450 → 50`, `1999 → 99`, `0 → 0`.
+Examples:
+
+- `1023 → 23`
+- `1450 → 50`
+- `1999 → 99`
+- `0 → 0`
+- `"12387612831928370912893101" → 1` (huge integer, safe via string path)
 
 ## Grayscale interpolation
 
@@ -26,4 +41,7 @@ So the range `[0, 99]` maps linearly into `[255, 3]` (white to near black). The 
 
 ## Usage in the app
 
-`getGrayscaleForNumber(input)` returns both the hex color and the mod value, so the UI can show the number and apply the background without duplicating logic.
+`getGrayscaleForNumber(input)` accepts either a `number` or a numeric **string**
+and returns both the hex color and the mod value. The UI passes the raw input
+string so that very large numbers still produce the correct color based on their
+last two digits.

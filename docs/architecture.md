@@ -4,7 +4,7 @@
 
 - **ChatContainer** (`components/ChatContainer.tsx`) — Stateful parent. Holds chat messages, renders the message list with `Message`, and `ChatInput`. On submit, appends user message, computes grayscale via `getGrayscaleForNumber`, appends bot message with that background color. Manages scroll-to-bottom and wraps the messages list in `aria-live="polite"`.
 
-- **ChatInput** (`components/ChatInput.tsx`) — Controlled form with a single number input and submit button. Validates numeric input; on failure shows inline error and sets `aria-invalid` / `aria-describedby`. Exposes `onSubmit(value, number)` to the parent. Includes visible focus styles for keyboard users.
+- **ChatInput** (`components/ChatInput.tsx`) — Controlled form with a single number input and submit button. Validates numeric input as a string; on failure shows inline error and sets `aria-invalid` / `aria-describedby`. Exposes `onSubmit(rawString)` to the parent, which then passes the string into the color logic. Includes visible focus styles for keyboard users.
 
 - **Message** (`components/Message.tsx`) — Presentational. Renders one chat bubble by role: user (right, fixed accent); bot (left, dynamic grayscale background). Chooses text color by luminance for contrast. Used inside a semantic `<ul>` from the parent.
 
