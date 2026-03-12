@@ -25,7 +25,7 @@ export function Message({ message }: MessageProps) {
       aria-label={isUser ? "Your message" : "Bot reply"}
     >
       <span
-        className={`max-w-[85%] rounded-2xl px-4 py-2.5 text-sm shadow-sm transition-colors duration-300 ${
+        className={`max-w-[85%] rounded-2xl px-4 py-2.5 text-sm shadow-sm transition-colors duration-300 break-words whitespace-pre-wrap ${
           isUser
             ? "bg-slate-700 text-white"
             : `${getContrastClass(message.color ?? "#ffffff")}`
